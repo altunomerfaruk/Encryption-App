@@ -1,4 +1,26 @@
 import tkinter
+from cryptography.fernet import Fernet
+
+def write_key():
+
+    key = Fernet.generate_key()
+    with open("key.key", "wb") as key_file:
+        key_file.write(key)
+
+def load_key():
+
+    return open("key.key", "rb").read()
+
+write_key()
+key = load_key()
+message = input("Enter text:").encode()
+
+f = Fernet(key)
+encrypted = f.encrypt(message)
+print(encrypted)
+decrypted_encrypted = f.decrypt(encrypted)
+print(decrypted_encrypted)
+
 
 #Screen
 screen = tkinter.Tk()
@@ -10,7 +32,7 @@ title = tkinter.Label(screen, text="Encryption App", font=("Arial", 20))
 title.pack(side="top")
 
 #Gif
-img = tkinter.PhotoImage(file="topSecret.gif").subsample(3, 3)
+img = tkinter.PhotoImage(file="topSecret.gif").subsample(3,3)
 panel = tkinter.Label(screen, image=img)
 panel.image = img
 panel.pack(side="top")
